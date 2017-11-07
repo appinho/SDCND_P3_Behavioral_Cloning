@@ -39,3 +39,9 @@ def load_data():
     print('Shape measurement data: ', y_train.shape)
 
     return X_train,y_train
+
+def mirror_data():
+    augmentated_images = []
+    augmentated_labels = []
+
+    
