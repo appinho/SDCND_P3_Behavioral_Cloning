@@ -5,7 +5,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # define path
-data_path = '../Simulated Data Old/'
+directory = '../Recorded_Data/'
+data_paths = ['Loop_Data/','Loop_Data_Reversed/',
+              'Recover_Data/','Recover_Data_Reversed/',
+              'Bridge_Recover_Data/','Curve_Recover_Data/']
+data_usage = [True,True,True,True,True,True]
 data_augmentation = True
 use_multiple_cameras = True
 correction_factor = 0.2
@@ -23,52 +27,54 @@ def load_data():
     return X_train,y_train
 
 def collect_data():
-    # init csv file buffer
-    lines = []
-
-    # open csv file from simulation data
-    with open(data_path + 'driving_log.csv') as csvfile:
-        reader = csv.reader(csvfile)
-        for line in reader:
-            lines.append(line)
-            
     # init image and measurement buffer
     images = []
     measurements = []
 
-    # loop through frames and store images and measurements
-    for line in lines:
-        source_path = line[0]
-        file_name = source_path.split('/')[-1]
-        current_path = data_path + 'IMG/' + file_name
-        image = cv2.imread(current_path)
-        images.append(image)
-        measurement = float(line[3])
-        measurements.append(measurement)
-        if use_multiple_cameras:
-            if not line[1] == "":
-                source_path = line[1]
-                file_name = source_path.split('/')[-1]
-                current_path = data_path + 'IMG/' + file_name
-                image = cv2.imread(current_path)
-                images.append(image)
-                measurement = float(line[3]) + correction_factor
-                measurements.append(measurement)
-            if not line[2] == "":
-                source_path = line[2]
-                file_name = source_path.split('/')[-1]
-                current_path = data_path + 'IMG/' + file_name
-                image = cv2.imread(current_path)
-                images.append(image)
-                measurement = float(line[3]) - correction_factor
-                measurements.append(measurement)
+    # open csv file from simulation data
+    for counter,data_path in enumerate(data_paths):
+        if not data_usage[counter]:
+            continue
+        print(directory + data_path + "loading..")
+        # init csv file buffer
+        lines = []
 
-                
+        with open(directory + data_path + 'driving_log.csv') as csvfile:
+            reader = csv.reader(csvfile)
+            for line in reader:
+                lines.append(line)
+
+        # loop through frames and store images and measurements
+        for line in lines:
+            source_path = line[0]
+            file_name = source_path.split('/')[-1]
+            current_path = directory + data_path + 'IMG/' + file_name
+            image = cv2.imread(current_path)
+            images.append(image)
+            measurement = float(line[3])
+            measurements.append(measurement)
+            if use_multiple_cameras:
+                if not line[1] == "":
+                    source_path = line[1]
+                    file_name = source_path.split('/')[-1]
+                    current_path = directory + data_path + 'IMG/' + file_name
+                    image = cv2.imread(current_path)
+                    images.append(image)
+                    measurement = float(line[3]) + correction_factor
+                    measurements.append(measurement)
+                if not line[2] == "":
+                    source_path = line[2]
+                    file_name = source_path.split('/')[-1]
+                    current_path = directory + data_path + 'IMG/' + file_name
+                    image = cv2.imread(current_path)
+                    images.append(image)
+                    measurement = float(line[3]) - correction_factor
+                    measurements.append(measurement)
 
     # data augmentation
     if data_augmentation:
         extend_with_flipped_images(images,measurements)
-        
+
     return images,measurements
 
 
