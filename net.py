@@ -56,6 +56,51 @@ def le_net(X_train,y_train,num_epochs,model_name, p_dropout):
 
     train_model(model,X_train,y_train,num_epochs,model_name)
 
+def alex_net(X_train,y_train,num_epochs,model_name):
+    input_shape = X_train.shape[1:4]
+    model = Sequential()
+    model.add(Lambda(lambda x: x / 255.0 - 0.5, input_shape=input_shape))
+    print(model.output_shape)
+    model.add(Cropping2D(cropping=((65, 25), (0, 0))))
+    print(model.output_shape)
+    # Layer 1 - Convolutional
+    model.add(Convolution2D(16,5,5,subsample=(2, 2), activation='relu'))
+    print(model.output_shape)
+    model.add(MaxPooling2D(border_mode='same'))
+    print(model.output_shape)
+    # Layer 2 - Convolutional
+    model.add(Convolution2D(32,5, 5, subsample=(2, 2), activation='relu'))
+    print(model.output_shape)
+    model.add(MaxPooling2D(border_mode='same'))
+    print(model.output_shape)
+    model.add(Dropout(0.2))
+    # model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
+    # Layer 3 - Convolutional
+    model.add(Convolution2D(64,3, 3, subsample=(2, 2), activation='relu'))
+    print(model.output_shape)
+    model.add(Dropout(0.5))
+
+    # Layer 6 - Flatten
+    model.add(Flatten())
+    print(model.output_shape)
+
+    # Layer 7 - Fully Connected
+    model.add(Dense(64,activation='relu'))
+    model.add(Dropout(0.5))
+
+    # Layer 8 - Fully Connected
+    model.add(Dense(32,activation='relu'))
+    model.add(Dropout(0.5))
+
+    # Layer 9 - Fully Connected
+    model.add(Dense(16,activation='relu'))
+    model.add(Dropout(0.5))
+
+    # Layer 10 - Fully Connected
+    model.add(Dense(1))
+
+    train_model(model,X_train,y_train,num_epochs,model_name)
+
 def nvidia_net(X_train,y_train,num_epochs,model_name):
     input_shape = X_train.shape[1:4]
     print(input_shape)
