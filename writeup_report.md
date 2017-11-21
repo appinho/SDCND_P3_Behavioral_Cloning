@@ -2,7 +2,7 @@
 
 [//]: # (Image References)
 
-[image1]: ./report_images/nvidia_net.jpg "Neural net architecture"
+[image1]: ./report_images/nvidia_net.png "Neural net architecture"
 [image2]: ./report_images/image.jpg "Training data image"
 [image3]: ./report_images/flipped_image.jpg "Flipped training data image"
 [image4]: ./report_images/left_image.jpg "Left training data image"
