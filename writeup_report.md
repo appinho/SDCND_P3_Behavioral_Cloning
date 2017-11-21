@@ -19,17 +19,24 @@ The chosen neural net architecture follows the model of the paper "End to End Le
 | Input         		| 160x320x3 RGB image   							|
 | Cropping2D         		| 66x200x3 RGB image   							|
 | Normalization        		| 66x200x3 normalized RGB image   							| 
-| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x6 	|
+| Convolution 5x5     	| 1x1 stride, 24 kernels 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 14x14x6 				|
-| Convolution 5x5	    | 1x1 stride, valid padding, outputs 10x10x16      									|
+| Max pooling	      	| 2x2 stride, padding=same, outputs 31x98x24				|
+| Convolution 5x5	    | 1x1 stride, 36 kernels      									|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 5x5x16 				|
-| Fully connected		| 400 input, 120 output        									|
+| Max pooling	      	| 2x2 stride, padding=same,  outputs 14x47x36 				|
+| Convolution 5x5	    | 1x1 stride, 48 kernels      									|
 | RELU					|												|
-| Fully connected		| 120 input, 84 output        									|
-| RELU					|												|
-| Fully connected		| 84 input, 43 output        									|
+| Max pooling	      	| 2x2 stride, padding=same,  outputs 5x22x48				|
+| Convolution 3x3	    | 1x1 stride, 64 kernels, padding=valid      									|
+| RELU					|	outputs 3x20x64											|
+| Convolution 3x3	    | 1x1 stride, 64 kernels, padding=valid      									|
+| RELU					|	outputs 1x18x64		
+| Flatten       | outputs 1152  |
+| Fully connected		| outputs 100        									|
+| Fully connected		| outputs 50        									|
+| Fully connected		| outputs 10        									|
+| Fully connected		| outputs 1        									|
 
 The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
 
