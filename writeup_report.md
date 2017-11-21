@@ -2,13 +2,12 @@
 
 [//]: # (Image References)
 
-[image1]: ./report_images/nvidia_net.jpg "Neural net architecture"
+[image1]: ./report_images/nvidia_net.png "Neural net architecture"
 [image2]: ./report_images/image.jpg "Training data image"
 [image3]: ./report_images/flipped_image.jpg "Flipped training data image"
 [image4]: ./report_images/left_image.jpg "Left training data image"
 [image5]: ./report_images/right_image.jpg "Right training data image"
 [image6]: ./report_images/hist.png "Histogram of steering angles"
-[image7]: ./report_images/losses.png "Training and validation loss"
 
 ### 1 Final Model Architecture
 
@@ -108,6 +107,5 @@ The architecture can be seen here and all details are already mentioned in Secti
 
 Now, the training and validation losses were both low and within the same region which shows that the overfitting was avoided.
 
-![alt text][image7]
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road which can be seen in the output video "video.mp4".
