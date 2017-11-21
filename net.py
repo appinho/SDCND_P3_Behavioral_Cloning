@@ -140,7 +140,7 @@ def nvidia_net(X_train,y_train,num_epochs,model_name):
     print(model.output_shape)
 
     # Fully connected layers
-    model.add(Dense(1164))
+    #model.add(Dense(1164))
     model.add(Dense(100))
     model.add(Dense(50))
     model.add(Dense(10))
