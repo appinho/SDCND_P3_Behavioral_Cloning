@@ -1,15 +1,16 @@
-### Project: Behavioral Cloning
+# Project: Behavioral Cloning
 
 [//]: # (Image References)
 
-[image1]: ./report_images/nvidia_net.png "Neural net architecture"
-[image2]: ./report_images/image.png "Training data image"
-[image3]: ./report_images/flipped_image.png "Flipped training data image"
-[image4]: ./report_images/left_image.png "Left training data image"
-[image5]: ./report_images/right_image.png "Right training data image"
-[image5]: ./report_images/hist.png "Histogram of steering angles"
+[image1]: ./report_images/nvidia_net.jpg "Neural net architecture"
+[image2]: ./report_images/image.jpg "Training data image"
+[image3]: ./report_images/flipped_image.jpg "Flipped training data image"
+[image4]: ./report_images/left_image.jpg "Left training data image"
+[image5]: ./report_images/right_image.jpg "Right training data image"
+[image6]: ./report_images/hist.png "Histogram of steering angles"
+[image7]: ./report_images/losses.png "Training and validation loss"
 
-## 1 Final Model Architecture
+### 1 Final Model Architecture
 
 The chosen neural net architecture follows the model of the paper "End to End Learning for Self-Driving Cars" from NVIDIA (http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf).  
 The subsequent layers with their attributes are listed in the following table:
@@ -93,6 +94,8 @@ This is why further data was recorded. First, one more loop in each directions w
 
 The resulting histogram of steering angles can be seen here:
 
+![alt text][image6]
+
 The three peaks occur because most of the recording time the car drives straight which implies small steering angles around 0. With the above mentioned augmentation technqiue these values are further processed by the correction factor of 0.2 for the left and right recorded images. Other than this, the histogram shows that the entire range of steering angles is covered so the trained model should also handle tighter curves.
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set by a 80/20 ratio respectively. I found that my first tries had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting.  
@@ -104,5 +107,7 @@ The architecture can be seen here and all details are already mentioned in Secti
 ![alt text][image1]
 
 Now, the training and validation losses were both low and within the same region which shows that the overfitting was avoided.
+
+![alt text][image7]
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road which can be seen in the output video "video.mp4".
